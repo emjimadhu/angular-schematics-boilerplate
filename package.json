@@ -4,7 +4,7 @@
   "description": "An angular schematics boilerplate for creating schematics with cusom, ESLint, Jest and so on.",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "yarn build && jasmine src/**/*_spec.js",
+    "test": "yarn build && jasmine src/**/*.spec.js",
     "git:commit": "git-cz",
     "preinstall": "$npm_execpath --silent run checkYarn",
     "checkYarn": "echo \"$npm_execpath\" | grep -q \"yarn\\.js$\" || (echo '⚠️  Use YARN not NPM! ⚠️ ' && echo && exit 1)"
