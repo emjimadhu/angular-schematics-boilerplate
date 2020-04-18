@@ -2,11 +2,19 @@
   "env": {
     "commonjs": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "jest/globals": true
   },
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended"
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:jest/recommended",
+    "plugin:jest/style",
+    "plugin:jest-formatting/strict",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:unicorn/recommended"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -20,7 +28,11 @@
     "createDefaultProgram": true
   },
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "unicorn",
+    "jest",
+    "jest-formatting",
+    "import"
   ],
   "rules": {
     "indent": [
@@ -234,7 +246,47 @@
     ],
     "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/explicit-function-return-type": 2,
-    "@typescript-eslint/typedef": 2
+    "@typescript-eslint/typedef": 2,
+    "jest/consistent-test-it": ["error", { "fn": "it" }],
+    "jest/no-expect-resolves": 2,
+    "jest/prefer-called-with": 2,
+    "jest/prefer-expect-assertions": 2,
+    "jest/prefer-spy-on": 2,
+    "jest/prefer-strict-equal": 2,
+    "jest/prefer-todo": 2,
+    "jest/require-top-level-describe": 2,
+    "jest/lowercase-name": [
+      "error",
+      {
+        "ignore": ["describe"]
+      }
+    ],
+    "import/no-deprecated": 2,
+    "import/order": [
+      2,
+      {
+        "newlines-between": "always",
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling"],
+          "index"
+        ]
+      }
+    ],
+    "import/first": [
+      2,
+      "absolute-first"
+    ],
+    "import/exports-last": 2,
+    "import/no-duplicates": [
+      2,
+      {
+        "considerQueryString": true
+      }
+    ],
+    "import/newline-after-import": 2
   },
   "overrides": [
     {
