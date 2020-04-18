@@ -5,6 +5,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "yarn build && jasmine src/**/*_spec.js",
+    "commit": "git-cz",
     "preinstall": "$npm_execpath --silent run checkYarn",
     "checkYarn": "echo \"$npm_execpath\" | grep -q \"yarn\\.js$\" || (echo '⚠️  Use YARN not NPM! ⚠️ ' && echo && exit 1)"
   },
@@ -35,8 +36,15 @@
     "typescript": "~3.8.3"
   },
   "devDependencies": {
-    "@types/node": "^13.13.0",
     "@types/jasmine": "~3.5.10",
+    "@types/node": "^13.13.0",
+    "commitizen": "^4.0.4",
+    "cz-conventional-changelog": "3.1.0",
     "jasmine": "^3.5.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
