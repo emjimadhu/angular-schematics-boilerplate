@@ -3,7 +3,8 @@
   "schematics": {
     "sample": {
       "description": "A blank schematic.",
-      "factory": "./libs/sample/index#sample"
+      "factory": "./libs/sample/index#sample",
+      "schema": "./libs/sample/schema.json"
     }
   }
 }
