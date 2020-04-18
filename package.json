@@ -7,7 +7,9 @@
     "copy:libs": "cpx 'src/libs/**/files/**/*.*' dist/libs && cpx 'src/libs/**/files/**/.!(gitignore)' dist/libs",
     "postbuild": "yarn copy:collection && yarn copy:libs",
     "build": "rm -rf dist && tsc -p tsconfig.json",
-    "test": "yarn build && jasmine src/**/*.spec.js",
+    "test": "NODE_ENV=test jest -w 1 --no-cache --config jest.json",
+    "test:coverage": "NODE_ENV=test jest -w 1 --no-cache --config jest.json --coverage",
+    "test:watch": "NODE_ENV=test npm run -s test -- --watchAll",
     "git:commit": "git-cz",
     "preinstall": "$npm_execpath --silent run checkYarn",
     "checkYarn": "echo \"$npm_execpath\" | grep -q \"yarn\\.js$\" || (echo '⚠️  Use YARN not NPM! ⚠️ ' && echo && exit 1)"
@@ -43,13 +45,14 @@
     "typescript": "~3.8.3"
   },
   "devDependencies": {
-    "@types/jasmine": "~3.5.10",
+    "@types/jest": "^25.2.1",
     "@types/node": "^13.13.0",
     "commitizen": "^4.0.4",
     "cpx": "^1.5.0",
     "cz-conventional-changelog": "3.1.0",
     "husky": "^4.2.5",
-    "jasmine": "^3.5.0"
+    "jest": "^25.3.0",
+    "ts-jest": "^25.4.0"
   },
   "config": {
     "commitizen": {
