@@ -1,22 +1,28 @@
 import {
-  apply, mergeWith,
+  apply,
+  mergeWith,
   Rule,
-  SchematicContext, template,
-  Tree, url
+  SchematicContext,
+  Source,
+  template,
+  Tree,
+  url
 } from '@angular-devkit/schematics';
 import { strings } from '@angular-devkit/core';
 
 import { ISampleOptions } from './schema';
 
+function generate(options: ISampleOptions): Source {
+  return apply(url('./files'), [
+    template({
+      ...options,
+      ...strings
+    })
+  ]);
+}
+
 export function sample(_options: ISampleOptions): Rule {
   return (_tree: Tree, _context: SchematicContext): Rule => {
-    const sourceFiles = url('./files');
-    const sourceParameterizedTemplate = apply(sourceFiles, [
-      template({
-        ..._options,
-        ...strings
-      })
-    ]);
-    return mergeWith(sourceParameterizedTemplate);
+    return mergeWith(generate(_options));
   };
 }
