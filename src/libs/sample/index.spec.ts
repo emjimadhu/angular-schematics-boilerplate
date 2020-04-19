@@ -1,21 +1,61 @@
 import * as path from 'path';
 
-import { Tree } from '@angular-devkit/schematics';
-import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
+import {
+  SchematicTestRunner, UnitTestTree
+} from '@angular-devkit/schematics/testing';
 
+import { ISampleOptions } from './schema';
 
 const collectionPath = path.join(__dirname, '../../collection.json');
 
-
 describe('schematics sample', () => {
-  it('works', () => {
-    expect.assertions(1);
+  const runner = new SchematicTestRunner('.', collectionPath);
 
-    const runner = new SchematicTestRunner('schematics', collectionPath);
-    const tree = runner.runSchematic('sample', {
+  it('should manage name only', () => {
+    expect.assertions(2);
+
+    const options: ISampleOptions = {
       name: 'foo'
-    }, Tree.empty());
+    };
+    const tree: UnitTestTree = runner.runSchematic('sample', options);
+    const files: string[] = tree.files;
 
-    expect(tree.files).toStrictEqual([]);
+    expect(
+      files.find((filename: string) => {
+        return filename === '/foo.ts';
+      })
+    ).not.toBeUndefined();
+    expect(tree.readContent('/foo.ts')).toStrictEqual(
+      '/*\n' +
+        'This is just a sample file generated using schematics\n' +
+        'Name: Foo\n' +
+        ' */\n' +
+        '\n' +
+        'console.log(\'Hello Foo\');\n'
+    );
+  });
+
+  it('should manage name to dasherize', () => {
+    expect.assertions(2);
+
+    const options: ISampleOptions = {
+      name: 'fooBar'
+    };
+    const tree: UnitTestTree = runner.runSchematic('sample', options);
+    const files: string[] = tree.files;
+
+    expect(
+      files.find((filename: string) => {
+        return filename === '/foo-bar.ts';
+      })
+    ).not.toBeUndefined();
+    expect(tree.readContent('/foo-bar.ts')).toStrictEqual(
+      '/*\n' +
+        'This is just a sample file generated using schematics\n' +
+        'Name: FooBar\n' +
+        ' */\n' +
+        '\n' +
+        'console.log(\'Hello FooBar\');\n'
+    );
   });
 });
